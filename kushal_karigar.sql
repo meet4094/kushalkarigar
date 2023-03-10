@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2023 at 02:28 PM
+-- Generation Time: Mar 10, 2023 at 07:45 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -54,8 +54,8 @@ CREATE TABLE `employee_data` (
 --
 
 INSERT INTO `employee_data` (`id`, `auth_token`, `phone_number`, `latitude`, `longitude`, `type_of_job_required`, `skill_set`, `work_experience`, `name`, `gender`, `self_picture`, `age`, `education`, `documents`, `type_of_employement`, `expected_salary_range`, `email_id`, `is_del`, `is_block`) VALUES
-(2, 'zOK8bWEhSBsjzhD', '7041022045', '10', '100', 'aaxx', 'xxxa', 'xax', 'axx', 'feMale', '', '22', 'MCA', '', 'manager', '', 'xyz@gmail.com', 0, 0),
-(4, 'L0QH3cR7PrCW4hd', '7041022044', 'cdc', 'cdcd', '[\"cdcd\",\"cdddc\"]', '[\"cdcd\",\"cdddc\"]', 'cdd', 'ddcd', 'cdc', '', '', '', '', '', '', NULL, 0, 0);
+(2, 'zOK8bWEhSBsjzhD', '7041022045', '10', '100', '[\"1\",\"4\",\"2\"]', '[\"2\",\"4\"]', '1', 'ABC', 'Female', 'c79c2d0b87af11b8c16a3c918707d605.jpg', '25', '12 pass', '', 'manager', '30000', 'ABC@gmail.com', 0, 0),
+(4, 'L0QH3cR7PrCW4hd', '7041022044', 'cdc', 'cdcd', '[\"1\"]', '[\"1\"]', '1', 'ddcd', 'cdc', 'd6d724dbf6b04f5252b9d2bbd126c775.jpg', '', '', '', '', '', NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -98,8 +98,33 @@ CREATE TABLE `employer_data` (
 --
 
 INSERT INTO `employer_data` (`id`, `auth_token`, `phone_number`, `latitude`, `longitude`, `employer_name`, `designation`, `organization_name`, `organization_type`, `organization_email_id`, `gst_number`, `gst_certificate`, `organization_headquarters`, `organization_size`, `product_type`, `categories_hiring`, `cities_hiring`, `unit_hiring_for`, `unit_name`, `unit_address`, `unit_poc_name`, `unit_poc_contact_number`, `unit_poc_email_id`, `unit_gst_number`, `unit_location`, `is_del`, `is_block`) VALUES
-(2, 'adgafdfgdf', '1231231231', '123', '123', 'abc', 'abc', 'abc', 'abc', 'abc@gmail.com', 'asdfsdxffasd', 'asfsadvc', 'asdfasd', 'sdf', 'asd', 'sf', 'sdf', 'sadf', 'fsd', 'sfdgfg', 'rsdfx', 'eafdsv', 'esdxc', 'esdxc', 'sdxc', 0, 0),
+(2, 'adgafdfgdf', '1231231231', '123', '123', 'ABC', 'abc', 'abc', 'abc', 'abc@gmail.com', 'asdfsdxffasd', 'asfsadvc', 'asdfasd', 'sdf', 'asd', 'sf', 'sdf', 'sadf', 'fsd', 'sfdgfg', 'rsdfx', 'eafdsv', 'esdxc', 'esdxc', 'sdxc', 0, 0),
 (3, 'Qq813iglPkRs5wB', '7041022045', '10', '100', 'any', 'vff', 'abc', 'any', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expected_salary_range`
+--
+
+CREATE TABLE `expected_salary_range` (
+  `id` int(11) NOT NULL,
+  `salary_range` varchar(255) NOT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `created_by` tinyint(1) NOT NULL,
+  `updated_at` datetime(6) DEFAULT NULL,
+  `updated_by` tinyint(1) DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `expected_salary_range`
+--
+
+INSERT INTO `expected_salary_range` (`id`, `salary_range`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) VALUES
+(1, '5000+', '2023-03-09 18:22:00.000000', 1, NULL, NULL, 0),
+(2, '10000+', '2023-03-09 18:22:00.000000', 1, NULL, NULL, 0),
+(3, '15000+', '2023-03-09 18:23:00.000000', 1, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -274,14 +299,14 @@ CREATE TABLE `work_experiences` (
   `created_by` tinyint(1) NOT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `updated_by` tinyint(1) DEFAULT NULL,
-  `is_del` tinyint(1) NOT NULL DEFAULT 0
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `work_experiences`
 --
 
-INSERT INTO `work_experiences` (`id`, `experience`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_del`) VALUES
+INSERT INTO `work_experiences` (`id`, `experience`, `created_at`, `created_by`, `updated_at`, `updated_by`, `is_deleted`) VALUES
 (1, '1 - 3 years experience', '2023-03-06 11:01:00.000000', 1, NULL, NULL, 0),
 (4, '3 - 5 years experience', '2023-03-06 11:08:00.000000', 1, '2023-03-06 11:15:00.000000', 1, 0),
 (6, '5 - 10 years experience', '2023-03-06 11:18:00.000000', 1, NULL, NULL, 0);
@@ -300,6 +325,12 @@ ALTER TABLE `employee_data`
 -- Indexes for table `employer_data`
 --
 ALTER TABLE `employer_data`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `expected_salary_range`
+--
+ALTER TABLE `expected_salary_range`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -352,6 +383,12 @@ ALTER TABLE `employee_data`
 -- AUTO_INCREMENT for table `employer_data`
 --
 ALTER TABLE `employer_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `expected_salary_range`
+--
+ALTER TABLE `expected_salary_range`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --

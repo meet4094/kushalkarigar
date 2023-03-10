@@ -30,6 +30,9 @@
             <li class="nav-item {{ @$title == 'work_experience' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ url('/work_experience') }}"><i class="fa fa-history"></i><span class="sidemenu-label">Work Experience</span></a>
             </li>
+            <li class="nav-item {{ @$title == 'expected_salary_range' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ url('/expected_salary_range') }}"><i class="fa fa-dollar-sign"></i><span class="sidemenu-label">Expected Salary Range</span></a>
+            </li>
         </ul>
     </div>
 </div>

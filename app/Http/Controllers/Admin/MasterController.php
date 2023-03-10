@@ -14,6 +14,13 @@ class MasterController extends Controller
         $this->master = new Master();
     }
 
+    public function dashboard(Request $req)
+    {
+        $data = $this->master->dashboard();
+        $data['title'] = 'dashboard';
+        return view('Admin.dashboard', $data);
+    }
+
     public function employer_list(Request $req)
     {
         if ($req->ajax()) {
@@ -37,6 +44,16 @@ class MasterController extends Controller
         if ($req->ajax()) {
             $data = $this->master->GetEmployerData($req);
             return $data;
+        }
+    }
+
+    public function employer_profile_view($req)
+    {
+        if (!empty($req)) {
+            $iData = $this->master->employer_profile_view($req);
+            $data['data'] = $iData;
+            $data['title'] = 'employer_list';
+            return view('Admin.Master.employer_profile_view', $data);
         }
     }
 
@@ -71,6 +88,16 @@ class MasterController extends Controller
         if ($req->ajax()) {
             $msg = $this->master->block_employee($req);
             return response()->json($msg);
+        }
+    }
+
+    public function employee_profile_view($req)
+    {
+        if (!empty($req)) {
+            $iData = $this->master->employee_profile_view($req);
+            $data['data'] = $iData;
+            $data['title'] = 'employee_list';
+            return view('Admin.Master.employee_profile_view', $data);
         }
     }
 
@@ -123,6 +150,13 @@ class MasterController extends Controller
             return $data;
         }
     }
+    public function get_type_of_job(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $this->master->get_type_of_job($req);
+            return $data;
+        }
+    }
 
     public function deleteJob(Request $req)
     {
@@ -154,6 +188,14 @@ class MasterController extends Controller
     {
         if ($req->ajax()) {
             $data = $this->master->GetSkillData($req);
+            return $data;
+        }
+    }
+
+    public function get_skill_set(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $this->master->get_skill_set($req);
             return $data;
         }
     }
@@ -196,6 +238,56 @@ class MasterController extends Controller
     {
         if ($req->ajax()) {
             $data = $this->master->GetExperienceData($req);
+            return $data;
+        }
+    }
+
+    public function get_work_experiences(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $this->master->get_work_experiences($req);
+            return $data;
+        }
+    }
+
+    public function expected_salary_range(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $this->master->expected_salary_range();
+            return $data;
+        }
+        $data['title'] = 'expected_salary_range';
+        return view('Admin.Master.expected_salary_range', $data);
+    }
+
+    public function add_salary_range(Request $req)
+    {
+        if (!empty($req)) {
+            $data = $this->master->add_salary_range($req);
+            return $data;
+        }
+    }
+
+    public function deleteSelaryRange(Request $req)
+    {
+        if (!empty($req)) {
+            $msg = $this->master->deleteSelaryRange($req);
+            return response()->json($msg);
+        }
+    }
+
+    public function GetSelaryRangeData(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $this->master->GetSelaryRangeData($req);
+            return $data;
+        }
+    }
+
+    public function get_expected_salary_range(Request $req)
+    {
+        if ($req->ajax()) {
+            $data = $this->master->get_expected_salary_range($req);
             return $data;
         }
     }

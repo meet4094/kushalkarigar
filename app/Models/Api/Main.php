@@ -87,7 +87,7 @@ class Main extends Model
             'expected_salary_range' => "",
         );
         DB::table('employee_data')
-            ->insert($Add_Data);
+        ->insert($Add_Data);
         $Data = array(
             'phone_number' => $req->phone_number,
             'latitude' => $req->latitude,
@@ -371,10 +371,10 @@ class Main extends Model
                 'work_experience' => $employeeformdata->work_experience,
                 'name' => $employeeformdata->name,
                 'gender' => $employeeformdata->gender,
-                'self_picture' => asset('images/selfpicture') . '/' . $employeeformdata->self_picture,
+                'self_picture' => $employeeformdata->self_picture ? asset('images/selfpicture') . '/' . $employeeformdata->self_picture : '',
                 'age' => $employeeformdata->age,
                 'education' => $employeeformdata->education,
-                'documents' => asset('images/documents') . '/' . $employeeformdata->documents,
+                'documents' => $employeeformdata->documents ? asset('images/documents') . '/' . $employeeformdata->documents : '',
                 'type_of_employement' => $employeeformdata->type_of_employement,
                 'expected_salary_range' => $employeeformdata->expected_salary_range,
                 'profile_status' => $employeeformdata->is_del
@@ -385,21 +385,40 @@ class Main extends Model
         }
     }
 
-    public function getOtherData()
+    public function getOtherData($req)
     {
-        $Jobs_Data = DB::table('jobs')
-            ->select('id', 'job_name')
-            ->where('is_deleted', '0')
-            ->get();
-
-        $Skills_Data = DB::table('skills')
-            ->select('id', 'skill_name')
-            ->where('is_deleted', '0')
-            ->get();
-
-        $iRes = $this->General_helper->success_res("success");
-        $iRes['jobs_data'] = $Jobs_Data;
-        $iRes['skills_data'] = $Skills_Data;
-        return $iRes;
+        if ($req->type == 1) {
+            $Jobs_Data = DB::table('jobs')
+                ->select('id', 'job_name')
+                ->where('is_deleted', '0')
+                ->get();
+            $iRes = $this->General_helper->success_res("success");
+            $iRes['type_of_job_required'] = $Jobs_Data;
+            return $iRes;
+        } else if ($req->type == 2) {
+            $Skills_Data = DB::table('skills')
+                ->select('id', 'skill_name')
+                ->where('is_deleted', '0')
+                ->get();
+            $iRes = $this->General_helper->success_res("success");
+            $iRes['skill_set'] = $Skills_Data;
+            return $iRes;
+        } else if ($req->type == 3) {
+            $Skills_Data = DB::table('work_experiences')
+                ->select('id', 'experience')
+                ->where('is_deleted', '0')
+                ->get();
+            $iRes = $this->General_helper->success_res("success");
+            $iRes['work_experience'] = $Skills_Data;
+            return $iRes;
+        } else if ($req->type == 4) {
+            $Skills_Data = DB::table('expected_salary_range')
+                ->select('id', 'salary_range')
+                ->where('is_deleted', '0')
+                ->get();
+            $iRes = $this->General_helper->success_res("success");
+            $iRes['expected_salary_range'] = $Skills_Data;
+            return $iRes;
+        }
     }
 }

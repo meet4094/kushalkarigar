@@ -73,6 +73,8 @@ class ApiMessage extends Model
             'error_poc_name_missing' => 'Please enter poc name',
             'error_poc_contact_number_missing' => 'Please enter poc contact number',
             'error_poc_email_id_missing' => 'Please enter poc email id',
+            'error_type_missing' => 'Please enter type',
+            'error_type_max_length_violate' => 'Please enter valid type',
             'error_profile_all_ready_created' => 'Profile all ready created',
             'error_invalid_email' => 'Please enter valid email id',
             'error_invalid_gst' => 'Please enter valid GST id',

@@ -21,6 +21,7 @@ class Validation extends Model
         $this->ApiMessage = new ApiMessage();
         define('NUMBER_MIN_LENGTH', 10);
         define('NUMBER_MAX_LENGTH', 10);
+        define('TYPE_MAX_LENGTH', 4);
     }
 
     public function Login($req)
@@ -336,6 +337,12 @@ class Validation extends Model
         if ($request_token) {
             return $request_token;
         } else {
+            $param = array_map('trim', $req->all());
+            $keys = array_keys($param);
+            if (!in_array("type", $keys) || empty($param['type']))
+                return $this->General_helper->parameter_error_res('type_missing');
+            if (($param['type']) > TYPE_MAX_LENGTH)
+                return $this->General_helper->parameter_error_res("type_max_length_violate", array(TYPE_MAX_LENGTH));
             $iRes = $this->General_helper->success_res('validation_ok');
             return $iRes;
         }

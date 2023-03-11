@@ -99,7 +99,7 @@ class MasterController extends Controller
 
         if ($validation_data['statuscode'] != 1)
             return $validation_data;
-        $data = $this->Main->getOtherData();
+        $data = $this->Main->getOtherData($req);
         return $data;
     }
 }

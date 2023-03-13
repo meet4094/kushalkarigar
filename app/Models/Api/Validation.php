@@ -85,14 +85,7 @@ class Validation extends Model
     {
         $Authtoken = $req->header('auth-token');
 
-        $employeeformdata = DB::table('employee_data')->where('auth_token', $Authtoken)->first();
-        $employerformdata = DB::table('employer_data')->where('auth_token', $Authtoken)->first();
-
-        if (empty($employeeformdata)) {
-            $AuthTokenData = $employerformdata;
-        } else {
-            $AuthTokenData = $employeeformdata;
-        }
+        $AuthTokenData = DB::table('employee_data')->where('auth_token', $Authtoken)->first();
 
         $request_token = $this->General_helper->RequestToken($req);
         $auth_token = $this->General_helper->AuthToken($req);
@@ -184,14 +177,7 @@ class Validation extends Model
     {
         $Authtoken = $req->header('auth-token');
 
-        $employeeformdata = DB::table('employee_data')->where('auth_token', $Authtoken)->first();
-        $employerformdata = DB::table('employer_data')->where('auth_token', $Authtoken)->first();
-
-        if (empty($employeeformdata)) {
-            $AuthTokenData = $employerformdata;
-        } else {
-            $AuthTokenData = $employeeformdata;
-        }
+        $AuthTokenData = DB::table('employer_data')->where('auth_token', $Authtoken)->first();
 
         $request_token = $this->General_helper->RequestToken($req);
         $auth_token = $this->General_helper->AuthToken($req);
@@ -283,8 +269,10 @@ class Validation extends Model
                 return $this->General_helper->parameter_error_res('organization_name_missing');
             if (!in_array("job_type", $keys) || empty($param['job_type']))
                 return $this->General_helper->parameter_error_res('job_type_missing');
-            if (!in_array("job_location", $keys) || empty($param['job_location']))
-                return $this->General_helper->parameter_error_res('job_location_missing');
+            if (!in_array("latitude", $keys) || empty($param['latitude']))
+                return $this->General_helper->parameter_error_res('latitude_missing');
+            if (!in_array("longitude", $keys) || empty($param['longitude']))
+                return $this->General_helper->parameter_error_res('longitude_missing');
             if (!in_array("state_domicile", $keys) || empty($param['state_domicile']))
                 return $this->General_helper->parameter_error_res('state_domicile_missing');
             if (!in_array("do_you_want_to_share_contact_no_with_employee", $keys) || empty($param['do_you_want_to_share_contact_no_with_employee']))
@@ -326,6 +314,27 @@ class Validation extends Model
         } else if (empty($Authtoken) || empty($AuthTokenData->auth_token)) {
             return $this->General_helper->parameter_error_res('user_not_register');
         } else {
+            $iRes = $this->General_helper->success_res('validation_ok');
+            return $iRes;
+        }
+    }
+
+    public function deleteUserData($req)
+    {
+        $request_token = $this->General_helper->RequestToken($req);
+        if ($request_token) {
+            return $request_token;
+        } else {
+            $param = array_map('trim', $req->all());
+            $keys = array_keys($param);
+            if (!in_array("phone_number", $keys) || empty($param['phone_number']))
+                return $this->General_helper->parameter_error_res('phone_number_missing');
+            if (strlen($param['phone_number']) < NUMBER_MIN_LENGTH || strlen($param['phone_number']) > NUMBER_MAX_LENGTH)
+                return $this->General_helper->parameter_error_res("phone_number_min_max_length_violate", array(NUMBER_MIN_LENGTH, NUMBER_MAX_LENGTH));
+            $data = DB::table('user_login')->where('phone_number', $param['phone_number'])->first();
+            if (empty($data)) {
+                return $this->General_helper->parameter_error_res("phone_number_not_register");
+            }
             $iRes = $this->General_helper->success_res('validation_ok');
             return $iRes;
         }

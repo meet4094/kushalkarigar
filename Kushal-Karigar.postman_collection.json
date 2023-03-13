@@ -68,13 +68,14 @@
 					},
 					{
 						"key": "Auth-Token",
-						"value": "L0QH3cR7PrCW4hd",
+						"value": "1DvbzJcIkBBtYfT",
 						"type": "text"
 					},
 					{
 						"key": "Accept",
 						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
@@ -97,17 +98,17 @@
 						},
 						{
 							"key": "type_of_job_required",
-							"value": "[\"cdcd\",\"cdddc\"]",
+							"value": "[1,2]",
 							"type": "text"
 						},
 						{
 							"key": "skill_set",
-							"value": "[\"cdcd\",\"cdddc\"]",
+							"value": "[1,2]",
 							"type": "text"
 						},
 						{
 							"key": "work_experience",
-							"value": "cdd",
+							"value": "1",
 							"type": "text"
 						},
 						{
@@ -117,7 +118,7 @@
 						},
 						{
 							"key": "gender",
-							"value": "cdc",
+							"value": "1",
 							"type": "text"
 						}
 					]
@@ -152,7 +153,7 @@
 					},
 					{
 						"key": "Auth-Token",
-						"value": "L0QH3cR7PrCW4hd",
+						"value": "1DvbzJcIkBBtYfT",
 						"type": "text"
 					},
 					{
@@ -208,7 +209,7 @@
 						{
 							"key": "self_picture",
 							"type": "file",
-							"src": "/C:/Users/AryaInfotech/Downloads/holi-1.jpg"
+							"src": "/C:/Users/AryaInfotech/Downloads/download.jpg"
 						},
 						{
 							"key": "age",
@@ -223,10 +224,7 @@
 						{
 							"key": "documents",
 							"type": "file",
-							"src": [
-								"/C:/Users/AryaInfotech/Downloads/holi-1.jpg",
-								"/C:/Users/AryaInfotech/Downloads/74477009.webp"
-							]
+							"src": "/C:/Users/AryaInfotech/Downloads/download.jpg"
 						},
 						{
 							"key": "type_of_employement",
@@ -275,7 +273,7 @@
 					},
 					{
 						"key": "Auth-Token",
-						"value": "Qq813iglPkRs5wB",
+						"value": "1DvbzJcIkBBtYfT",
 						"type": "text"
 					},
 					{
@@ -354,7 +352,7 @@
 					},
 					{
 						"key": "Auth-Token",
-						"value": "L0QH3cR7PrCW4hd",
+						"value": "1DvbzJcIkBBtYfT",
 						"type": "text"
 					},
 					{
@@ -413,8 +411,8 @@
 						},
 						{
 							"key": "gst_certificate",
-							"value": "cdc",
-							"type": "text"
+							"type": "file",
+							"src": "/C:/Users/AryaInfotech/Downloads/download.jpg"
 						},
 						{
 							"key": "organization_headquarters",
@@ -513,7 +511,7 @@
 					},
 					{
 						"key": "Auth-Token",
-						"value": "Zj8pCvkAwzblKp7",
+						"value": "1DvbzJcIkBBtYfT",
 						"type": "text"
 					},
 					{
@@ -556,8 +554,13 @@
 							"type": "text"
 						},
 						{
-							"key": "job_location",
+							"key": "latitude",
 							"value": "cdcdcc",
+							"type": "text"
+						},
+						{
+							"key": "longitude",
+							"value": "cxcxcx",
 							"type": "text"
 						},
 						{
@@ -587,7 +590,7 @@
 						},
 						{
 							"key": "poc_email_id",
-							"value": "cd",
+							"value": "cd@gmail.com",
 							"type": "text"
 						}
 					]
@@ -631,7 +634,7 @@
 					"formdata": [
 						{
 							"key": "auth_token",
-							"value": "Qq813iglPkRs5wB",
+							"value": "XOjmHsGTSfUcZGn",
 							"type": "text"
 						}
 					]
@@ -655,6 +658,50 @@
 			"response": []
 		},
 		{
+			"name": "Delete User Data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Request-Token",
+						"value": "IMXfgUSO9pKZm5j",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "phone_number",
+							"value": "7041022050",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/deleteUserData",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"deleteUserData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Other Data",
 			"request": {
 				"method": "POST",
@@ -672,7 +719,13 @@
 				],
 				"body": {
 					"mode": "formdata",
-					"formdata": []
+					"formdata": [
+						{
+							"key": "type",
+							"value": "4",
+							"type": "text"
+						}
+					]
 				},
 				"url": {
 					"raw": "http://127.0.0.1:8000/api/getOtherData",

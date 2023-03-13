@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2023 at 07:45 AM
+-- Generation Time: Mar 13, 2023 at 01:58 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -30,14 +30,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `employee_data` (
   `id` int(11) NOT NULL,
   `auth_token` text NOT NULL,
-  `phone_number` decimal(10,0) NOT NULL,
+  `phone_number` varchar(10) NOT NULL,
   `latitude` varchar(255) NOT NULL,
   `longitude` varchar(255) NOT NULL,
   `type_of_job_required` text NOT NULL,
   `skill_set` text NOT NULL,
   `work_experience` text NOT NULL,
   `name` text NOT NULL,
-  `gender` text NOT NULL,
+  `gender` int(11) NOT NULL COMMENT '0 = Male, 1 = Female',
   `self_picture` text DEFAULT NULL,
   `age` text DEFAULT NULL,
   `education` text DEFAULT NULL,
@@ -49,14 +49,6 @@ CREATE TABLE `employee_data` (
   `is_block` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = Active, 1 = Blocked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `employee_data`
---
-
-INSERT INTO `employee_data` (`id`, `auth_token`, `phone_number`, `latitude`, `longitude`, `type_of_job_required`, `skill_set`, `work_experience`, `name`, `gender`, `self_picture`, `age`, `education`, `documents`, `type_of_employement`, `expected_salary_range`, `email_id`, `is_del`, `is_block`) VALUES
-(2, 'zOK8bWEhSBsjzhD', '7041022045', '10', '100', '[\"1\",\"4\",\"2\"]', '[\"2\",\"4\"]', '1', 'ABC', 'Female', 'c79c2d0b87af11b8c16a3c918707d605.jpg', '25', '12 pass', '', 'manager', '30000', 'ABC@gmail.com', 0, 0),
-(4, 'L0QH3cR7PrCW4hd', '7041022044', 'cdc', 'cdcd', '[\"1\"]', '[\"1\"]', '1', 'ddcd', 'cdc', 'd6d724dbf6b04f5252b9d2bbd126c775.jpg', '', '', '', '', '', NULL, 0, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -66,7 +58,7 @@ INSERT INTO `employee_data` (`id`, `auth_token`, `phone_number`, `latitude`, `lo
 CREATE TABLE `employer_data` (
   `id` int(11) NOT NULL,
   `auth_token` text NOT NULL,
-  `phone_number` decimal(10,0) NOT NULL,
+  `phone_number` varchar(10) NOT NULL,
   `latitude` varchar(255) NOT NULL,
   `longitude` varchar(255) NOT NULL,
   `employer_name` text NOT NULL,
@@ -85,21 +77,14 @@ CREATE TABLE `employer_data` (
   `unit_name` text DEFAULT NULL,
   `unit_address` text DEFAULT NULL,
   `unit_poc_name` text DEFAULT NULL,
-  `unit_poc_contact_number` text DEFAULT NULL,
+  `unit_poc_contact_number` varchar(10) DEFAULT NULL,
   `unit_poc_email_id` text DEFAULT NULL,
   `unit_gst_number` text DEFAULT NULL,
-  `unit_location` text DEFAULT NULL,
+  `unit_location_latitude` varchar(255) DEFAULT NULL,
+  `unit_location_longitude` varchar(255) NOT NULL,
   `is_del` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Enable = 0, Disable = 1',
   `is_block` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0 = Active, 1 = Block'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `employer_data`
---
-
-INSERT INTO `employer_data` (`id`, `auth_token`, `phone_number`, `latitude`, `longitude`, `employer_name`, `designation`, `organization_name`, `organization_type`, `organization_email_id`, `gst_number`, `gst_certificate`, `organization_headquarters`, `organization_size`, `product_type`, `categories_hiring`, `cities_hiring`, `unit_hiring_for`, `unit_name`, `unit_address`, `unit_poc_name`, `unit_poc_contact_number`, `unit_poc_email_id`, `unit_gst_number`, `unit_location`, `is_del`, `is_block`) VALUES
-(2, 'adgafdfgdf', '1231231231', '123', '123', 'ABC', 'abc', 'abc', 'abc', 'abc@gmail.com', 'asdfsdxffasd', 'asfsadvc', 'asdfasd', 'sdf', 'asd', 'sf', 'sdf', 'sadf', 'fsd', 'sfdgfg', 'rsdfx', 'eafdsv', 'esdxc', 'esdxc', 'sdxc', 0, 0),
-(3, 'Qq813iglPkRs5wB', '7041022045', '10', '100', 'any', 'vff', 'abc', 'any', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -169,7 +154,8 @@ CREATE TABLE `post_job_data` (
   `salary_range` varchar(255) NOT NULL,
   `organization_name` text NOT NULL,
   `job_type` varchar(255) NOT NULL,
-  `job_location` varchar(255) NOT NULL,
+  `latitude` varchar(255) NOT NULL,
+  `longitude` varchar(255) NOT NULL,
   `state_domicile` text NOT NULL,
   `do_you_want_to_share_contact_no_with_employee` text NOT NULL,
   `mode_of_contact` text NOT NULL,
@@ -183,8 +169,9 @@ CREATE TABLE `post_job_data` (
 -- Dumping data for table `post_job_data`
 --
 
-INSERT INTO `post_job_data` (`id`, `auth_token`, `job_role`, `specialization`, `no_of_job_openings_for_this_role`, `salary_range`, `organization_name`, `job_type`, `job_location`, `state_domicile`, `do_you_want_to_share_contact_no_with_employee`, `mode_of_contact`, `poc_name`, `poc_contact_number`, `poc_email_id`, `is_del`) VALUES
-(1, 'Zj8pCvkAwzblKp7', 'c dc', 'cd', 'xcsc', 'csc', 'cdcd', 'cdc', 'cdcdcc', 'cdcd', 'cdcc', 'cdcdc', 'cdcd', 'cdcd', 'cd', 0);
+INSERT INTO `post_job_data` (`id`, `auth_token`, `job_role`, `specialization`, `no_of_job_openings_for_this_role`, `salary_range`, `organization_name`, `job_type`, `latitude`, `longitude`, `state_domicile`, `do_you_want_to_share_contact_no_with_employee`, `mode_of_contact`, `poc_name`, `poc_contact_number`, `poc_email_id`, `is_del`) VALUES
+(1, 'Zj8pCvkAwzblKp7', 'c dc', 'cd', 'xcsc', 'csc', 'cdcd', 'cdc', 'cdcdcc', '', 'cdcd', 'cdcc', 'cdcdc', 'cdcd', 'cdcd', 'cd', 0),
+(2, '1DvbzJcIkBBtYfT', 'c dc', 'cd', 'xcsc', 'csc', 'cdcd', 'cdc', 'cdcdcc', 'cxcxcx', 'cdcd', 'cdcc', 'cdcdc', 'cdcd', 'cdcd', 'cd@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -283,8 +270,7 @@ CREATE TABLE `user_login` (
 --
 
 INSERT INTO `user_login` (`id`, `uid`, `phone_number`, `auth_token`, `created_at`, `updated_at`, `is_del`) VALUES
-(1, 1, '7041022045', 'Qq813iglPkRs5wB', '2023-03-07 05:45:09', NULL, 0),
-(2, 1, '7041022044', 'L0QH3cR7PrCW4hd', '2023-03-07 06:49:29', NULL, 0);
+(2, 1, '7041022045', '1DvbzJcIkBBtYfT', '2023-03-11 08:10:27', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -377,13 +363,13 @@ ALTER TABLE `work_experiences`
 -- AUTO_INCREMENT for table `employee_data`
 --
 ALTER TABLE `employee_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `employer_data`
 --
 ALTER TABLE `employer_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `expected_salary_range`
@@ -401,7 +387,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `post_job_data`
 --
 ALTER TABLE `post_job_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `skills`

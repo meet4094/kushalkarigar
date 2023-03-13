@@ -93,6 +93,16 @@ class MasterController extends Controller
         return $data;
     }
 
+    public function deleteUserData(Request $req)
+    {
+        $validation_data = $this->Validation->deleteUserData($req);
+
+        if ($validation_data['statuscode'] != 1)
+            return $validation_data;
+        $data = $this->Main->deleteUserData($req);
+        return $data;
+    }
+
     public function getOtherData(Request $req)
     {
         $validation_data = $this->Validation->getOtherData($req);

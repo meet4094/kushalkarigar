@@ -16,11 +16,11 @@ class ApiMessage extends Model
             // Token
             'error_request_token_invalid' => "Request token missing.",
             'error_auth_token_invalid' => "Your session has been expired. Please log in again.",
-            
+
             // Validation
             'success_validation_ok' => "Validation OK.",
             'success_success' => "Success!!",
-            
+
             // Param Validation
             'error_user_not_register' => "Please fill up the form and send it to us",
             'error_phone_number_missing' => 'Please enter phone number',
@@ -78,6 +78,8 @@ class ApiMessage extends Model
             'error_profile_all_ready_created' => 'Profile all ready created',
             'error_invalid_email' => 'Please enter valid email id',
             'error_invalid_gst' => 'Please enter valid GST id',
+            'error_phone_number_not_register' => 'This phone number user not register',
+            'success_user_deleted' => 'User Deleted',
 
             // Image - Video
             'error_invalid_image_extension' => 'Select only image file.',

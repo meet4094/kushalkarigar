@@ -85,9 +85,10 @@ class Main extends Model
             'documents' => "",
             'type_of_employement' => "",
             'expected_salary_range' => "",
+            'email_id' => "",
         );
         DB::table('employee_data')
-        ->insert($Add_Data);
+            ->insert($Add_Data);
         $Data = array(
             'phone_number' => $req->phone_number,
             'latitude' => $req->latitude,
@@ -111,13 +112,14 @@ class Main extends Model
         $self_pictureextension = $self_picture->extension();
         $self_picturefileName = md5(uniqid() . time()) . '.' . $self_pictureextension;
         $self_picturefileNamefile = file_get_contents($self_picture);
-        file_put_contents(public_path('images/selfpicture/') . $self_picturefileName, $self_picturefileNamefile);
+        file_put_contents(public_path('images/employee/selfpicture/') . $self_picturefileName, $self_picturefileNamefile);
 
         $documents = $req->documents;
         $documentsextension = $documents->extension();
         $documentsfileName = md5(uniqid() . time()) . '.' . $documentsextension;
         $documentsfileNamefile = file_get_contents($documents);
-        file_put_contents(public_path('images/documents/') . $documentsfileName, $documentsfileNamefile);
+        file_put_contents(public_path('images/employee/documents/') . $documentsfileName, $documentsfileNamefile);
+
         $AddData = array(
             'phone_number' => $req->phone_number,
             'latitude' => $req->latitude,
@@ -146,10 +148,10 @@ class Main extends Model
             'work_experience' => $req->work_experience,
             'name' => $req->name,
             'gender' => $req->gender,
-            'self_picture' => asset('images/selfpicture') . '/' . $self_picturefileName,
+            'self_picture' => asset('images/employee/selfpicture') . '/' . $self_picturefileName,
             'age' => $req->age,
             'education' => $req->education,
-            'documents' => asset('images/documents') . '/' . $documentsfileName,
+            'documents' => asset('images/employee/documents') . '/' . $documentsfileName,
             'type_of_employement' => $req->type_of_employement,
             'expected_salary_range' => $req->expected_salary_range,
         );
@@ -185,7 +187,8 @@ class Main extends Model
             'unit_poc_contact_number' => "",
             'unit_poc_email_id' => "",
             'unit_gst_number' => "",
-            'unit_location' => "",
+            'unit_location_latitude' => "",
+            'unit_location_longitude' => "",
         );
         DB::table('employer_data')
             ->insert($AddData);
@@ -219,50 +222,16 @@ class Main extends Model
         return $iRes;
     }
 
-    public function addPostJobForm($req)
-    {
-        $auth_token = $req->header('auth_token');
-        $Add_Data = array(
-            'auth_token' => $auth_token,
-            'job_role' => $req->job_role,
-            'specialization' => $req->specialization,
-            'no_of_job_openings_for_this_role' => $req->no_of_job_openings_for_this_role,
-            'salary_range' => $req->salary_range,
-            'job_type' => $req->job_type,
-            'job_location' => $req->job_location,
-            'do_you_want_to_share_contact_no_with_employee' => $req->do_you_want_to_share_contact_no_with_employee,
-            'mode_of_contact' => $req->mode_of_contact,
-            'organization_name' => $req->organization_name,
-            'state_domicile' => $req->organization_name,
-            'poc_name' => $req->poc_name,
-            'poc_contact_number' => $req->poc_contact_number,
-            'poc_email_id' => $req->poc_email_id,
-        );
-        DB::table('post_job_data')
-            ->insert($Add_Data);
-        $Data = array(
-            'job_role' => $req->job_role,
-            'specialization' => $req->specialization,
-            'no_of_job_openings_for_this_role' => $req->no_of_job_openings_for_this_role,
-            'salary_range' => $req->salary_range,
-            'job_type' => $req->job_type,
-            'job_location' => $req->job_location,
-            'do_you_want_to_share_contact_no_with_employee' => $req->do_you_want_to_share_contact_no_with_employee,
-            'mode_of_contact' => $req->mode_of_contact,
-            'organization_name' => $req->organization_name,
-            'state_domicile' => $req->state_domicile,
-            'poc_name' => $req->poc_name,
-            'poc_contact_number' => $req->poc_contact_number,
-            'poc_email_id' => $req->poc_email_id,
-        );
-        $iRes = $this->General_helper->success_res("success");
-        $iRes['data'] = $Data;
-        return $iRes;
-    }
-
     public function updateEmployerForm($req)
     {
         $auth_token = $req->header('auth_token');
+
+        $gst_certificate = $req->gst_certificate;
+        $gst_certificateextension = $gst_certificate->extension();
+        $gst_certificatefileName = md5(uniqid() . time()) . '.' . $gst_certificateextension;
+        $gst_certificatefileNamefile = file_get_contents($gst_certificate);
+        file_put_contents(public_path('images/employer/gstcertificate/') . $gst_certificatefileName, $gst_certificatefileNamefile);
+
         $AddData = array(
             'phone_number' => $req->phone_number,
             'latitude' => $req->latitude,
@@ -273,7 +242,7 @@ class Main extends Model
             'organization_type' => $req->organization_type,
             'organization_email_id' => $req->organization_email_id,
             'gst_number' => $req->gst_number,
-            'gst_certificate' => $req->gst_certificate,
+            'gst_certificate' => $gst_certificatefileName ? $gst_certificatefileName : '',
             'organization_headquarters' => $req->organization_headquarters,
             'organization_size' => $req->organization_size,
             'product_type' => $req->product_type,
@@ -301,7 +270,7 @@ class Main extends Model
             'organization_type' => $req->organization_type,
             'organization_email_id' => $req->organization_email_id,
             'gst_number' => $req->gst_number,
-            'gst_certificate' => $req->gst_certificate,
+            'gst_certificate' => asset('images/employer/gstcertificate') . '/' . $gst_certificatefileName,
             'organization_headquarters' => $req->organization_headquarters,
             'organization_size' => $req->organization_size,
             'product_type' => $req->product_type,
@@ -315,6 +284,50 @@ class Main extends Model
             'unit_poc_email_id' => $req->unit_poc_email_id,
             'unit_gst_number' => $req->unit_gst_number,
             'unit_location' => $req->unit_location,
+        );
+        $iRes = $this->General_helper->success_res("success");
+        $iRes['data'] = $Data;
+        return $iRes;
+    }
+
+    public function addPostJobForm($req)
+    {
+        $auth_token = $req->header('auth_token');
+        $Add_Data = array(
+            'auth_token' => $auth_token,
+            'job_role' => $req->job_role,
+            'specialization' => $req->specialization,
+            'no_of_job_openings_for_this_role' => $req->no_of_job_openings_for_this_role,
+            'salary_range' => $req->salary_range,
+            'job_type' => $req->job_type,
+            'latitude' => $req->latitude,
+            'longitude' => $req->longitude,
+            'do_you_want_to_share_contact_no_with_employee' => $req->do_you_want_to_share_contact_no_with_employee,
+            'mode_of_contact' => $req->mode_of_contact,
+            'organization_name' => $req->organization_name,
+            'state_domicile' => $req->organization_name,
+            'poc_name' => $req->poc_name,
+            'poc_contact_number' => $req->poc_contact_number,
+            'poc_email_id' => $req->poc_email_id,
+        );
+        DB::table('post_job_data')
+            ->insert($Add_Data);
+        $Data = array(
+            'job_role' => $req->job_role,
+            'specialization' => $req->specialization,
+            'no_of_job_openings_for_this_role' => $req->no_of_job_openings_for_this_role,
+            'salary_range' => $req->salary_range,
+            'job_type' => $req->job_type,
+            'latitude' => $req->latitude,
+            'longitude' => $req->longitude,
+            'do_you_want_to_share_contact_no_with_employee' => $req->do_you_want_to_share_contact_no_with_employee,
+            'do_you_want_to_share_contact_no_with_employee' => $req->do_you_want_to_share_contact_no_with_employee,
+            'mode_of_contact' => $req->mode_of_contact,
+            'organization_name' => $req->organization_name,
+            'state_domicile' => $req->state_domicile,
+            'poc_name' => $req->poc_name,
+            'poc_contact_number' => $req->poc_contact_number,
+            'poc_email_id' => $req->poc_email_id,
         );
         $iRes = $this->General_helper->success_res("success");
         $iRes['data'] = $Data;
@@ -383,6 +396,17 @@ class Main extends Model
             $iRes['data'] = $Data;
             return $iRes;
         }
+    }
+
+    public function deleteUserData($req)
+    {
+        $phone_number = $req->phone_number;
+        DB::table('user_login')->where('phone_number', $phone_number)->delete();
+        DB::table('employee_data')->where('phone_number', $phone_number)->delete();
+        DB::table('employer_data')->where('phone_number', $phone_number)->delete();
+
+        $iRes = $this->General_helper->success_res("user_deleted");
+        return $iRes;
     }
 
     public function getOtherData($req)

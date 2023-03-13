@@ -316,7 +316,8 @@
                             <div class="media-body">
                                 <span>Unit Location</span>
                                 <div>
-                                    {{ $data->unit_location }}
+                                    {{ $data->unit_location_latitude }}
+                                    {{ $data->unit_location_longitude }}
                                 </div>
                             </div>
                         </div>
